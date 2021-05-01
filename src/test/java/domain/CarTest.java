@@ -13,7 +13,7 @@ public class CarTest {
       "name1",
       "name2",
       "name3",
-      "thisiscarname"
+      "name4"
   })
   void 자동차는_이름을가질수있고_초기위치는_0이다(String carName) {
     Car car = new Car(CarName.from(carName));

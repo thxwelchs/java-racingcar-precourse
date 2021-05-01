@@ -14,7 +14,7 @@ class CarNamesTokenizerTest {
 
   @ParameterizedTest
   @CsvSource({
-      "'123123', 1",
+      "'12312', 1",
       "'123,123', 2",
       "'a,b,c,d,e,f,g,h,i,j,k', 11",
       "'abcd,efg', 2",
