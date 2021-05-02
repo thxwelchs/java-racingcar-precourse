@@ -11,6 +11,11 @@ public class CarPosition {
   public int getPosition() {
     return position;
   }
+
+  public void increase() {
+    position++;
+  }
+
   public static CarPosition create() {
     return new CarPosition(INITIAL_CAR_POSITION);
   }

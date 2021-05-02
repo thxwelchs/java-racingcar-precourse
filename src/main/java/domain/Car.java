@@ -8,6 +8,10 @@ public class Car {
     this.name = name;
   }
 
+  public void move() {
+    position.increase();
+  }
+
   public CarName getName() {
     return name;
   }

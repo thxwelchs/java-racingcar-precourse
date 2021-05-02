@@ -15,6 +15,14 @@ public class RacingCarGame {
 
   public void start() {
     initialRounds();
+    while(round.isContinue()) {
+      round.round();
+      cars.moveAll();
+    }
+  }
+
+  public Cars getResults() {
+    return cars;
   }
 
   private void initialCars(Tokenizer tokenizer) {
