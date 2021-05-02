@@ -6,34 +6,66 @@ import java.util.List;
 public class Cars {
   private List<Car> cars;
 
-  private Cars(List<CarName> carNames) {
-    this.cars = createCars(carNames);
+  private Cars(CarsBuilder builder) {
+    this.cars = builder.cars;
   }
 
-  private List<Car> createCars(List<CarName> carNames) {
-    List<Car> cars = new ArrayList<>();
+  private static class CarsBuilder {
+    private List<Car> cars;
 
-    for (CarName carName : carNames) {
-      cars.add(new Car(carName));
+    private CarsBuilder carNames(List<CarName> carNames) {
+      this.cars = createCars(carNames);
+      return this;
     }
 
-    return cars;
+    private CarsBuilder cars(List<Car> cars) {
+      this.cars = cars;
+      return this;
+    }
+
+    private List<Car> createCars(List<CarName> carNames) {
+      List<Car> cars = new ArrayList<>();
+
+      for (CarName carName : carNames) {
+        cars.add(new Car(carName));
+      }
+
+      return cars;
+    }
+
+    private Cars build() {
+      return new Cars(this);
+    }
+  }
+
   public void moveAll() {
     for (Car car : getCars()) {
-      car.move();
       car.move(MoveConditionGenerator.generate());
     }
   }
+
+  public Cars clone() {
+    List<Car> clonedCars = new ArrayList<>();
+
+    for (Car car : getCars()) {
+      clonedCars.add(car.clone());
     }
+
+    return new CarsBuilder()
+        .cars(clonedCars)
+        .build();
   }
 
   public List<Car> getCars() {
     return cars;
   }
 
-  public static Cars of(String rawCarNames, Tokenizer tokenizer) {
+
+  public static Cars of(String rawCarNames, Tokenizer<CarName> tokenizer) {
     List<CarName> carNames = tokenizer.tokenize(rawCarNames);
 
-    return new Cars(carNames);
+    return new CarsBuilder()
+        .carNames(carNames)
+        .build();
   }
 }

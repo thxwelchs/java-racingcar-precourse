@@ -1,19 +1,23 @@
 package controller;
 
+import domain.Car;
+import domain.CarName;
+import domain.CarRacingResults;
 import domain.Cars;
 import domain.GameRound;
-import domain.MoveConditionGenerator;
 import domain.Tokenizer;
 import view.InputView;
+import view.ResultView;
 
 public class RacingCarGame {
   private Cars cars;
   private GameRound round;
+  private Tokenizer<CarName> tokenizer;
+  private CarRacingResults results;
 
-  private Tokenizer tokenizer;
-
-  public RacingCarGame(Tokenizer tokenizer) {
+  public RacingCarGame(Tokenizer<CarName> tokenizer) {
     this.tokenizer = tokenizer;
+    results = new CarRacingResults();
   }
 
   public void start() {
@@ -21,12 +25,21 @@ public class RacingCarGame {
 
     while(round.isContinue()) {
       round.round();
-      cars.moveAll();
+      move();
+      recordResult();
     }
   }
 
-  public Cars getResults() {
-    return cars;
+  private void move() {
+    cars.moveAll();
+  }
+
+  private void recordResult() {
+    results.addResult(cars);
+  }
+
+  public void doResult() {
+    ResultView.printResults(results);
   }
 
   private void initialize() {

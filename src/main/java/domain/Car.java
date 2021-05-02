@@ -9,8 +9,15 @@ public class Car {
     this.name = name;
   }
 
-  public void move() {
-    position.increase();
+  private Car(CarName name, CarPosition position) {
+    this.name = name;
+    this.position = position;
+  }
+
+  public Car clone() {
+    return new Car(this.name, this.position.clone());
+  }
+
   public void move(int condition) {
     if(isMovable(condition)) {
       position.increase();

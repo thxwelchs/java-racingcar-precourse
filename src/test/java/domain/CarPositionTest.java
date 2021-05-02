@@ -1,7 +1,6 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,5 +19,11 @@ class CarPositionTest {
       carPosition.increase();
     }
     assertThat(carPosition.getPosition()).isEqualTo(increaseCount);
+  }
+
+  @Test
+  void 복제된_자동차위치와_기존자동차위치는_다르다() {
+    CarPosition carPosition = CarPosition.create();
+    assertThat(carPosition).isNotEqualTo(carPosition.clone());
   }
 }

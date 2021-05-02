@@ -16,6 +16,10 @@ public class CarPosition {
     position++;
   }
 
+  public CarPosition clone() {
+    return new CarPosition(this.position);
+  }
+
   public static CarPosition create() {
     return new CarPosition(INITIAL_CAR_POSITION);
   }
