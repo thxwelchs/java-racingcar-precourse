@@ -1,21 +1,28 @@
 package controller;
 
 import domain.Cars;
+import domain.GameRound;
 import domain.Tokenizer;
 import view.InputView;
 
 public class RacingCarGame {
   private Cars cars;
+  private GameRound round;
 
   public RacingCarGame(Tokenizer tokenizer) {
-    this.cars = initialCars(tokenizer);
+    initialCars(tokenizer);
   }
 
   public void start() {
+    initialRounds();
   }
 
-  private Cars initialCars(Tokenizer tokenizer) {
+  private void initialCars(Tokenizer tokenizer) {
     String rawCarNames = InputView.enterCarNames();
-    return Cars.of(rawCarNames, tokenizer);
+    this.cars = Cars.of(rawCarNames, tokenizer);
+  }
+
+  private void initialRounds() {
+    this.round = GameRound.from(InputView.enterRounds());
   }
 }

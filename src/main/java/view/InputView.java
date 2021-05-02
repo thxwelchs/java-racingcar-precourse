@@ -9,4 +9,9 @@ public class InputView {
     System.out.println(InputGuideComments.INPUT_CAR_NAMES_COMMENT);
     return INPUT.next();
   }
+
+  public static int enterRounds() {
+    System.out.println(InputGuideComments.INPUT_GAME_ROUND_COMMENT);
+    return INPUT.nextInt();
+  }
 }
