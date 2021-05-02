@@ -21,6 +21,9 @@ public class Cars {
   public void moveAll() {
     for (Car car : getCars()) {
       car.move();
+      car.move(MoveConditionGenerator.generate());
+    }
+  }
     }
   }
 

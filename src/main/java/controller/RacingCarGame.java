@@ -2,6 +2,7 @@ package controller;
 
 import domain.Cars;
 import domain.GameRound;
+import domain.MoveConditionGenerator;
 import domain.Tokenizer;
 import view.InputView;
 
@@ -9,12 +10,15 @@ public class RacingCarGame {
   private Cars cars;
   private GameRound round;
 
+  private Tokenizer tokenizer;
+
   public RacingCarGame(Tokenizer tokenizer) {
-    initialCars(tokenizer);
+    this.tokenizer = tokenizer;
   }
 
   public void start() {
-    initialRounds();
+    initialize();
+
     while(round.isContinue()) {
       round.round();
       cars.moveAll();
@@ -25,7 +29,12 @@ public class RacingCarGame {
     return cars;
   }
 
-  private void initialCars(Tokenizer tokenizer) {
+  private void initialize() {
+    initialCars();
+    initialRounds();
+  }
+
+  private void initialCars() {
     String rawCarNames = InputView.enterCarNames();
     this.cars = Cars.of(rawCarNames, tokenizer);
   }

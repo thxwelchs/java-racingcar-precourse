@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class CarTest {
@@ -23,6 +24,26 @@ public class CarTest {
   }
 
   @ParameterizedTest
+  @CsvSource({
+      "0, false",
+      "1, false",
+      "2, false",
+      "3, false",
+      "4, true",
+      "5, true",
+      "6, true",
+      "7, true",
+      "8, true",
+      "9, true",
+  })
+  void 자동차는_4이상의_입력값이주어졌을때만_움직인다(int moveCondition, boolean expected) {
+    Car car = new Car(CarName.from("name"));
+    assertThat(car.getPosition().getPosition()).isEqualTo(0);
+    car.move(moveCondition);
+    assertThat(car.getPosition().getPosition() == 1).isEqualTo(expected);
+  }
+
+  @ParameterizedTest
   @ValueSource(ints = {
       1, 2, 3, 4, 5, 6, 7, 100, 999
   })
@@ -30,7 +51,7 @@ public class CarTest {
     Car car = new Car(CarName.from("name"));
     assertThat(car.getPosition().getPosition()).isEqualTo(0);
     for(int i = 0; i < moveCount; i++) {
-      car.move();
+      car.move(4);
     }
     assertThat(car.getPosition().getPosition()).isEqualTo(moveCount);
   }
