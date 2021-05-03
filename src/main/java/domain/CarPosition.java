@@ -2,6 +2,7 @@ package domain;
 
 public class CarPosition {
   private static final int INITIAL_CAR_POSITION = 0;
+  public static final CarPosition ZERO = new CarPosition(INITIAL_CAR_POSITION);
   private int position;
 
   private CarPosition(int position) {
@@ -20,7 +21,12 @@ public class CarPosition {
     return new CarPosition(this.position);
   }
 
+  public boolean isGreaterThanOrEqualTo(CarPosition carPosition) {
+    return this.position >= carPosition.position;
+  }
+
   public static CarPosition create() {
     return new CarPosition(INITIAL_CAR_POSITION);
   }
+
 }

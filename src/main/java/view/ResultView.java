@@ -1,9 +1,13 @@
 package view;
 
 import domain.Car;
+import domain.CarName;
 import domain.CarPosition;
 import domain.CarRacingResults;
 import domain.Cars;
+import domain.Winners;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResultView {
   private static final String CAR_NAME_AND_POSITION_RESULT_DELIMITER = " : ";
@@ -15,6 +19,18 @@ public class ResultView {
     for (Cars cars: results.getResults()) {
       printResult(cars);
     }
+  }
+
+  public static void printWinners(Winners winners) {
+    System.out.println(createSequentialWinnerNames(winners) + "가 최종 우승했습니다.");
+  }
+
+  private static String createSequentialWinnerNames(Winners winners) {
+    List<String> winnerNames = new ArrayList<>();
+    for (CarName winner : winners.getWinners()) {
+      winnerNames.add(winner.getName());
+    }
+    return String.join(", ", winnerNames);
   }
 
   private static void printResult(Cars cars) {
@@ -41,5 +57,13 @@ public class ResultView {
     }
 
     return sb.toString();
+  }
+
+  public static void printError(RuntimeException e) {
+    System.out.println(e.getMessage() + " (다시 입력해주세요.)");
+  }
+
+  public static void printError(String message) {
+    System.out.println(message);
   }
 }

@@ -6,13 +6,16 @@ import java.util.List;
 import java.util.Set;
 
 public class Cars {
+
   private List<Car> cars;
+  private CarPosition topPosition = CarPosition.ZERO;
 
   private Cars(CarsBuilder builder) {
     this.cars = builder.cars;
   }
 
   private static class CarsBuilder {
+
     private List<Car> cars;
 
     private CarsBuilder carNames(List<CarName> carNames) {
@@ -43,6 +46,13 @@ public class Cars {
   public void moveAll() {
     for (Car car : getCars()) {
       car.move(MoveConditionGenerator.generate());
+      changeTopPosition(car.getPosition());
+    }
+  }
+
+  private void changeTopPosition(CarPosition position) {
+    if(position.isGreaterThanOrEqualTo(topPosition)) {
+      this.topPosition = position;
     }
   }
 
@@ -62,8 +72,16 @@ public class Cars {
     return cars;
   }
 
+  public boolean isEmpty() {
+    return cars.isEmpty();
+  }
+
+  public CarPosition topPosition() {
+    return topPosition;
+  }
+
   private static void validate(List<CarName> carNames) {
-    if(isDuplicatedCarName(carNames)) {
+    if (isDuplicatedCarName(carNames)) {
       throw new IllegalArgumentException("자동차 이름은 중복 될 수 없습니다.");
     }
   }
@@ -78,7 +96,7 @@ public class Cars {
     return set.size() != carNames.size();
   }
 
-  public static Cars of(String rawCarNames, Tokenizer<CarName> tokenizer) {
+  public static Cars of(String rawCarNames, Tokenizer<CarName> tokenizer) throws IllegalArgumentException {
     List<CarName> carNames = tokenizer.tokenize(rawCarNames);
 
     validate(carNames);

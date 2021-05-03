@@ -1,11 +1,11 @@
 package controller;
 
-import domain.Car;
 import domain.CarName;
 import domain.CarRacingResults;
 import domain.Cars;
 import domain.GameRound;
 import domain.Tokenizer;
+import domain.WinnerCalculator;
 import view.InputView;
 import view.ResultView;
 
@@ -40,6 +40,7 @@ public class RacingCarGame {
 
   public void doResult() {
     ResultView.printResults(results);
+    ResultView.printWinners(WinnerCalculator.calculate(cars));
   }
 
   private void initialize() {
