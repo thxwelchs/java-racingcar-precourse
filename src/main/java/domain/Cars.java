@@ -1,7 +1,9 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Cars {
   private List<Car> cars;
@@ -60,9 +62,26 @@ public class Cars {
     return cars;
   }
 
+  private static void validate(List<CarName> carNames) {
+    if(isDuplicatedCarName(carNames)) {
+      throw new IllegalArgumentException("자동차 이름은 중복 될 수 없습니다.");
+    }
+  }
+
+  private static boolean isDuplicatedCarName(List<CarName> carNames) {
+    Set<CarName> set = new HashSet<>();
+
+    for (CarName carName : carNames) {
+      set.add(carName);
+    }
+
+    return set.size() != carNames.size();
+  }
 
   public static Cars of(String rawCarNames, Tokenizer<CarName> tokenizer) {
     List<CarName> carNames = tokenizer.tokenize(rawCarNames);
+
+    validate(carNames);
 
     return new CarsBuilder()
         .carNames(carNames)

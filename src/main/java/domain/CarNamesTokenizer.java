@@ -5,8 +5,8 @@ import java.util.List;
 
 public class CarNamesTokenizer implements Tokenizer<CarName> {
   private static final String CAR_NAMES_SPLIT_DELIMITER = ",";
-  private static final String WORD_AND_DIGIT_REGEX = "[0-9a-zA-Z]";
-  private static final String CAR_NAMES_REGEX = WORD_AND_DIGIT_REGEX + "+("+ CAR_NAMES_SPLIT_DELIMITER + WORD_AND_DIGIT_REGEX + "+)*";
+  private static final String WORD_AND_DIGIT_REGEX = "[\\w\\d]";
+  private static final String CAR_NAMES_REGEX = "(" + WORD_AND_DIGIT_REGEX + "+)" + "(" + CAR_NAMES_SPLIT_DELIMITER + "\\s*" + WORD_AND_DIGIT_REGEX + "+)*";
 
   private void validate(String carNames) {
     if(isNotMatchCarNames(carNames)) {
@@ -38,6 +38,7 @@ public class CarNamesTokenizer implements Tokenizer<CarName> {
   }
 
   public List<CarName> tokenize(String carNames) {
+    carNames = carNames.trim();
     validate(carNames);
     List<String> tokens = createTokens(carNames.split(CAR_NAMES_SPLIT_DELIMITER));
     return convertToCarNames(tokens);

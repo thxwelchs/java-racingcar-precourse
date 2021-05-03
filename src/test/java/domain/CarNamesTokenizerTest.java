@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class CarNamesTokenizerTest {
-  private final Tokenizer tokenizer = new CarNamesTokenizer();
+  private final Tokenizer<CarName> tokenizer = new CarNamesTokenizer();
 
   @ParameterizedTest
   @CsvSource({
